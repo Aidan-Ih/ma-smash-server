@@ -17,7 +17,6 @@ const getEvents = async () => {
     const CT = await getUpcoming({ perPage: 50, currentDate: timestamp, state: "CT" });
     const RI = await getUpcoming({ perPage: 50, currentDate: timestamp, state: "RI" });
     */
-    console.log(MA)
     const MAEvents = MA.data.tournaments.nodes
     /*
     const NHEvents = NH.data.tournaments.nodes
@@ -48,12 +47,10 @@ const StartggWorker = (app) => {
     app.get("/getUpcoming", async (req, res) => {
         const now = Date.now()
         if (now > eventsTimestamp + (5 * 60 * 1000)) {
-            console.log("refreshing event cache")
             await getEvents();
             res.send(events);
         }
         else {
-            console.log("sending from cache")
             res.send(events);
         }
     })
