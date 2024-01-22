@@ -1,5 +1,6 @@
 var fs = require('fs');
 var https = require('https');
+import cors from "cors"
 var privateKey  = fs.readFileSync('selfsigned.key', 'utf8');
 var certificate = fs.readFileSync('selfsigned.crt', 'utf8');
 
@@ -7,7 +8,7 @@ var credentials = {key: privateKey, cert: certificate};
 var express = require('express');
 var app = express();
 
-app.use(cors());
+app.use(cors)
 app.use(express.json());
 StartggWorker(app);
 app.get('/', (req, res) => {
