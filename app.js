@@ -1,5 +1,6 @@
 var fs = require('fs');
 var https = require('https');
+var StartggWorker = require("./Startgg/StartggWorker")
 var privateKey  = fs.readFileSync('selfsigned.key', 'utf8');
 var certificate = fs.readFileSync('selfsigned.crt', 'utf8');
 

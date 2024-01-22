@@ -1,5 +1,4 @@
-import { getUpcoming, getTournament, searchTournament } from "./Requests.js";
-import NodeCache from "node-cache";
+import { getUpcoming, getTournament } from "./Requests.js";
 
 var eventsTimestamp = 0
 var events = []
