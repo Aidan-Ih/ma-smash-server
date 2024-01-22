@@ -3,8 +3,10 @@ const startggurl = "https://api.start.gg/gql/alpha"
 const headers = {
     "content-type": "application/json",
     "Accept": "application/json",
-    Authorization: "Bearer 6d0d769a0294cc2068c96080115056f5" //cybersecurity go brrrr
+    Authorization: "Bearer 0f1d0d2ca72c1880bcf17f7f788b963e" //cybersecurity go brrrr
 }
+
+const token_hashtag_cybersecurity = "0f1d0d2ca72c1880bcf17f7f788b963e"
 
 const getUpcomingTournamentsQuery =
     `query TournamentsByState ($perPage:Int!, $currentDate:Timestamp!, $state:String!) {
@@ -27,6 +29,7 @@ const getUpcomingTournamentsQuery =
                 city
                 startAt
                 venueAddress
+                addrState
                 events {
                     name
                 }
@@ -35,6 +38,7 @@ const getUpcomingTournamentsQuery =
                     url
                 }
                 shortSlug
+                slug
                 events {
                     videogame {
                                     id
@@ -58,6 +62,7 @@ const getTournamentByIdQuery =
             city
             startAt
             venueAddress
+            slug
             events {
                 id
                 name
