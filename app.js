@@ -15,5 +15,5 @@ app.get('/', (req, res) => {
 
 console.log("starting app")
 StartggWorker(app);
-app.listen(process.env.PORT || 4000);
-
+app.listen(80);
+console.log("listening on port 80")
