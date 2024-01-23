@@ -1,3 +1,5 @@
+const { request } = require("express")
+
 const startggurl = "https://api.start.gg/gql/alpha"
 
 const headers = {
@@ -129,7 +131,7 @@ const searchTournamentQuery =
 
 
 
-const getUpcoming = async (vars) => {
+const requestUpcoming = async (vars) => {
     const tosend = {
         query: getUpcomingTournamentsQuery,
         variables: vars
@@ -173,4 +175,4 @@ const searchTournament = async (vars) => {
     return data
 }
 
-export { getUpcoming, getTournament, searchTournament }
+module.exports = requestUpcoming;

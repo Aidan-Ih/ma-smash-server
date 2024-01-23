@@ -1,4 +1,4 @@
-const requests = require("./Requests")
+const requestUpcoming = require("./Requests")
 
 var eventsTimestamp = 0
 var events = []
@@ -8,7 +8,7 @@ var featuredIds = [617711, 620014, 616898, 620152, 616592, 620223, 619532, 59806
 
 const refreshEvents = async () => {
     const timestamp = Math.floor(Date.now() / 1000)
-    const MA = await getUpcoming({ perPage: 50, currentDate: timestamp, state: "MA" });
+    const MA = await requestUpcoming({ perPage: 50, currentDate: timestamp, state: "MA" });
     /*
     const NH = await getUpcoming({ perPage: 50, currentDate: timestamp, state: "NH" });
     const VT = await getUpcoming({ perPage: 50, currentDate: timestamp, state: "VT" });
@@ -31,21 +31,10 @@ const refreshEvents = async () => {
     eventsTimestamp = Date.now()
 }
 
-const getFeatured = async () => {
-    var newFeatured = []
-    for (let i = 0; i < featuredIds.length; i++) {
-        var e = await getTournament({id: featuredIds[i]})
-        newFeatured.push(e.data.tournaments.nodes[0])
-    }
-    newFeatured.sort((a, b) => a.startAt - b.startAt)
-    featuredEvents = newFeatured
-    featuredTimestamp = Date.now()
-}
-
 const getUpcoming = async () => {
     const now = Date.now()
     if (now > eventsTimestamp + (5 * 60 * 1000)) {
-        await getUpcoming();
+        await refreshEvents();
         console.log("loading")
         return events
     }
@@ -55,29 +44,4 @@ const getUpcoming = async () => {
     }
 }
 
-const StartggWorker = (app) => {
-    app.get("/getUpcoming", async (req, res) => {
-        
-    })
-
-    app.get("/getFeaturedIds", async (req, res) => {
-        res.send(featuredIds)
-        /*
-        const now = Date.now()
-        if (now > featuredTimestamp + (5 * 60 * 1000)) {
-            console.log("refreshing featured cache")
-            await getFeatured();
-            res.send(featuredEvents);
-        }
-        else {
-            console.log("sending from cache")
-            res.send(featuredEvents);
-        }
-        */
-    })
-
-
-}
-
-
-exports.getUpcoming = this.getUpcoming;
+module.exports = getUpcoming;
