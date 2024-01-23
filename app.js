@@ -10,11 +10,7 @@ var credentials = {key: privateKey, cert: certificate};
 
 var express = require('express');
 var app = express();
-
-var corsOptions = {
-    origin: 'https://massachusettssmash.com',
-    optionsSuccessStatus: 200 
-  }
+app.use(cors)
 
 app.use(express.json());
 
@@ -22,7 +18,7 @@ app.get('/', (req, res) => {
     res.send('MA Smash Website Start.gg Server')
 })
 
-app.get('/getUpcoming', cors(corsOptions), (req, res) => {
+app.get('/getUpcoming', (req, res) => {
     getUpcoming().then((result) => res.send(result))
 })
 
