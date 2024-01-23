@@ -24,5 +24,5 @@ app.get('/getUpcoming', (req, res) => {
 
 // your express configuration here
 
-var httpsServer = http.createServer(credentials, app);
+var httpsServer = https.createServer(credentials, app);
 httpsServer.listen(8080)
