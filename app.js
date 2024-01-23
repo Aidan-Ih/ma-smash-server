@@ -10,7 +10,7 @@ var credentials = {key: privateKey, cert: certificate};
 
 var express = require('express');
 var app = express();
-app.use(cors)
+app.use(cors())
 
 app.use(express.json());
 
@@ -24,5 +24,5 @@ app.get('/getUpcoming', (req, res) => {
 
 // your express configuration here
 
-var httpsServer = https.createServer(credentials, app);
+var httpsServer = http.createServer(credentials, app);
 httpsServer.listen(8080)
