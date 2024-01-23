@@ -35,11 +35,9 @@ const getUpcoming = async () => {
     const now = Date.now()
     if (now > eventsTimestamp + (5 * 60 * 1000)) {
         await refreshEvents();
-        console.log("loading")
         return events
     }
     else {
-        console.log("cached")
         return events
     }
 }
