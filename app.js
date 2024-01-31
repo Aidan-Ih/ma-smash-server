@@ -10,6 +10,8 @@ var certificate = fs.readFileSync('selfsigned.crt', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 */
 
+
+var runNutbot = require("./Discord/index")
 var express = require('express');
 var cors = require('cors')
 var app = express();
@@ -31,3 +33,5 @@ const server = app.listen(port, () => console.log(`App listening on port ${port}
 
 server.keepAliveTimeout = 120 * 1000;
 server.headersTimeout = 120 * 1000;
+
+runNutbot()
