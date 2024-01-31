@@ -20,7 +20,7 @@ const runNutbot = () => {
 
     client.on("messageCreate", message => {
         // weegee: 369305001211854858
-        if (message.author.id === "369305001211854858") {
+        if (message.author.id === "369305001211854858" || message.author.id === "236270502430113793") {
             const content = message.content;
             if (content === content.toUpperCase()) {
                 message.delete(1000);
