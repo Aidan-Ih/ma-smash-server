@@ -7,7 +7,7 @@ var featuredEvents = []
 var featuredIds = [617711, 620014, 616898, 620152, 616592, 620223, 619532, 598069]
 
 const refreshEvents = async () => {
-    const timestamp = Math.floor(Date.now() / 1000)
+    const timestamp = Math.floor(Date.now() / 1000) - 30000 //show events from a bit age
     const MA = await requestUpcoming({ perPage: 50, currentDate: timestamp, state: "MA" });
     /*
     const NH = await getUpcoming({ perPage: 50, currentDate: timestamp, state: "NH" });
