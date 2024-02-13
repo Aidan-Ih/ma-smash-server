@@ -1,10 +1,73 @@
-const requestUpcoming = require("./Requests")
+const startggurl = "https://api.start.gg/gql/alpha"
+require('dotenv').config();
+gg_token = process.env.STARTGG_TOKEN
+
+const headers = {
+    "content-type": "application/json",
+    "Accept": "application/json",
+    Authorization: "Bearer " + gg_token
+}
+
+const getUpcomingTournamentsQuery =
+    `query TournamentsByState ($perPage:Int!, $currentDate:Timestamp!, $state:String!) {
+            tournaments(query: {
+                perPage: $perPage
+                page: 1
+                sortBy: "startAt asc"
+            filter: {
+                addrState: $state
+                afterDate: $currentDate
+                countryCode: "US"
+                videogameIds: [
+                                1386
+                            ]
+                    }
+                }) {
+            nodes {
+                id
+                name
+                city
+                startAt
+                venueAddress
+                addrState
+                events {
+                    name
+                }
+                images {
+                    type
+                    url
+                }
+                shortSlug
+                slug
+                events {
+                    videogame {
+                                    id
+                                }
+                            }
+                        }
+                    }
+                }`
 
 var eventsTimestamp = 0
 var events = []
-var featuredTimestamp = 0
-var featuredEvents = []
-var featuredIds = [617711, 620014, 616898, 620152, 616592, 620223, 619532, 598069]
+
+const requestUpcoming = async (vars) => {
+    const tosend = {
+        query: getUpcomingTournamentsQuery,
+        variables: vars
+    }
+    const response = await fetch(startggurl, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(tosend),
+    }).then(res => res.json())
+    if ("success" in response) {
+        return response
+    }
+    else {
+        return { ...response, "success": true }
+    }
+}
 
 const refreshEvents = async () => {
     const timestamp = Math.floor(Date.now() / 1000) - 30000 //show events from a bit age
