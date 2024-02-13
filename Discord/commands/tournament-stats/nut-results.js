@@ -10,7 +10,6 @@ const get_event_id = async (tournament_slug, event_slug) => {
 	}
 
 	const data = await getEventsBySlug(var_tournament_slug);
-	console.log(data)
 	if (data.data.tournament == null) {
 		return -1;
 	}
