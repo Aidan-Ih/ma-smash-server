@@ -145,18 +145,18 @@ const get_tournament_results = async (event_data) => {
 
 	var out = `# Tournament info for ${event_name}\n\n`
 	out += "### Notable Upsets:\n```"
-	for (i=0; i<10; i++) {
+	for (i = 0; i < 10; i++) {
 		if (i < upset_factors.length) {
 			const e = upset_factors[i];
 			out += `UF ${e.uf}: ${e.winner} > ${e.loser}\n`;
 		}
 		else {
 			break;
-		} 
+		}
 	}
 
 	out += "``` \n### Highest SPR Performance: \n```"
-	for (i=0; i<10; i++) {
+	for (i = 0; i < 10; i++) {
 		if (i < spr.length) {
 			const e = spr[i];
 			out += `SPR ${e.spr}: ${e.name}\n`
@@ -175,29 +175,30 @@ module.exports = {
 		.setDescription('Shows stats for a given tournament')
 		.addStringOption(option =>
 			option
-				.setName('slug')
-				.setDescription('The tournament slug')
-				.setRequired(true))
-		.addStringOption(option =>
-			option
-				.setName('event')
-				.setDescription('The name of the event')
+				.setName('link')
+				.setDescription('The link to the tournament event')
 				.setRequired(true)),
 
 	async execute(interaction) {
-		const slug = interaction.options.getString("slug");
-		const event = interaction.options.getString("event");
-		const event_data = await get_event_id(slug, event);
-		console.log(event_data)
-
-		if (event_data == -1) {
-			interaction.reply("Could not find event");
+		const event_link = interaction.options.getString("link");
+		const link_split = event_link.split("/");
+		try {
+			const tournament_name_idx = link_split.indexOf("tournament") + 1;
+			const event_name_idx = link_split.indexOf("event") + 1;
+			const tournament_slug = link_split[tournament_name_idx];
+			const event_slug = link_split[event_name_idx];
+			const event_data = await get_event_id(tournament_slug, event_slug);
+			if (event_data == -1) {
+				interaction.reply("Could not find event. Make sure your link is in the form: start.gg/tournament/TOURNAMENT_NAME/event/EVENT_NAME");
+				return
+			}
+			await interaction.deferReply();
+			const out = await get_tournament_results(event_data);
+			await interaction.editReply(out);
+		}
+		catch (error) {
+			interaction.reply("Could not find event. Make sure your link is in the form: start.gg/tournament/TOURNAMENT_NAME/event/EVENT_NAME");
 			return
 		}
-		
-		await interaction.deferReply();
-		const out = await get_tournament_results(event_data);
-
-		await interaction.editReply(out);
 	},
 }
