@@ -72,23 +72,24 @@ const requestUpcoming = async (vars) => {
 const refreshEvents = async () => {
     const timestamp = Math.floor(Date.now() / 1000) - 30000 //show events from a bit age
     const MA = await requestUpcoming({ perPage: 50, currentDate: timestamp, state: "MA" });
-    /*
-    const NH = await getUpcoming({ perPage: 50, currentDate: timestamp, state: "NH" });
-    const VT = await getUpcoming({ perPage: 50, currentDate: timestamp, state: "VT" });
-    const ME = await getUpcoming({ perPage: 50, currentDate: timestamp, state: "ME" });
-    const CT = await getUpcoming({ perPage: 50, currentDate: timestamp, state: "CT" });
-    const RI = await getUpcoming({ perPage: 50, currentDate: timestamp, state: "RI" });
-    */
+    
+    const NH = await requestUpcoming({ perPage: 50, currentDate: timestamp, state: "NH" });
+    const VT = await requestUpcoming({ perPage: 50, currentDate: timestamp, state: "VT" });
+    const ME = await requestUpcoming({ perPage: 50, currentDate: timestamp, state: "ME" });
+    const CT = await requestUpcoming({ perPage: 50, currentDate: timestamp, state: "CT" });
+    const RI = await requestUpcoming({ perPage: 50, currentDate: timestamp, state: "RI" });
+    
     const MAEvents = MA.data.tournaments.nodes
-    /*
+    
     const NHEvents = NH.data.tournaments.nodes
     const VTEvents = VT.data.tournaments.nodes
     const MEEvents = ME.data.tournaments.nodes
     const CTEvents = CT.data.tournaments.nodes
     const RIEvents = RI.data.tournaments.nodes
-    */
+    
+    
 
-    const newEvents = [...MAEvents]
+    const newEvents = [...MAEvents, ... NHEvents, ...VTEvents ,...MEEvents, ...CTEvents, ...RIEvents]
     events = newEvents
     events.sort((a, b) => a.startAt - b.startAt)
     eventsTimestamp = Date.now()

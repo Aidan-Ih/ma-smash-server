@@ -16,7 +16,7 @@ var express = require('express');
 var cors = require('cors')
 var app = express();
 var getUpcoming = require('./Startgg/getUpcoming')
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 4000;
 app.use(cors())
 
 app.use(express.json());
@@ -28,6 +28,7 @@ app.get('/', (req, res) => {
 app.get('/getUpcoming', (req, res) => {
     getUpcoming().then((result) => res.send(result))
 })
+
 
 const server = app.listen(port, () => console.log(`App listening on port ${port}!`));
 
