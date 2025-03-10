@@ -8,7 +8,6 @@ const get_event_id = async (tournament_slug, event_slug) => {
 	const var_tournament_slug = {
 		"slug_name": tournament_slug
 	}
-
 	const data = await getEventsBySlug(var_tournament_slug);
 	if (data.data.tournament == null) {
 		return -1;
